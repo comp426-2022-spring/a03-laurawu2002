@@ -1,7 +1,13 @@
 import {coinFlip, coinFlips, countFlips, flipACoin} from "./coin.mjs"
+import express from "express"
+import minimist from "minimist"
+
 // Require Express.js
 const express = require('express')
 const app = express()
+const args = minimist(process.argv.slice(2))
+args["port"];
+var HTTP_PORT = args.port || 5000;
 
 // Start an app server
 const server = app.listen(HTTP_PORT, () => {
