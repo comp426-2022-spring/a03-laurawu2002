@@ -31,12 +31,9 @@ app.get('/app/flip/', (req, res) => {
     });
 
 app.get('/app/flips/:number', (req, res) => {
-    // Respond with status 200
-    res.statusCode = 200;
     const flips = coinFlips(req.params.number)
     const count = countFlips(flips)
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-    res.end('{"raw":' + flips + ',"summary":' + count + "}")
+    res.status(200).json({"raw":flips,"summary":count})
     });
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res) => {
