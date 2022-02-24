@@ -3,11 +3,11 @@ import express from "express"
 import minimist from "minimist"
 
 // Require Express.js
-const express = require('express')
 const app = express()
 const args = minimist(process.argv.slice(2))
 args["port"];
 var HTTP_PORT = args.port || 5000;
+
 
 // Start an app server
 const server = app.listen(HTTP_PORT, () => {
@@ -16,7 +16,7 @@ const server = app.listen(HTTP_PORT, () => {
 
 app.get('/app/', (req, res) => {
     // Respond with status 200
-        res.statusCode = 200;
+        res.statusCode = 200;       
     // Respond with status message "OK"
         res.statusMessage = 'OK';
         res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
@@ -24,30 +24,25 @@ app.get('/app/', (req, res) => {
     });
 
 app.get('/app/flips/', (req, res) => {
+    // Respond with status 200
     res.statusCode = 200;
     res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-    res.end('"flip":"' + coinFlip() + '"}')
+    res.end('{"flip":"' + coinFlip() + '"}')
     });
 
 app.get('/app/flips/:number', (req, res) => {
+    // Respond with status 200
+    res.statusCode = 200;
     const flips = coinFlips(req.params.number)
     const count = countFlips(flips)
-    res.statusCode = 200;
     res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
     res.end('{"raw":[' + flips + '],"summary":' + count + "}")
     });
 
-app.get('/app/flip/call/heads', (req, res) => {
-    res.statusCode = 200;
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-    res.end(flipACoin('heads'))
-});
-
-app.get('/app/flip/call/tails', (req, res) => {
-    res.statusCode = 200;
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-    res.end(flipACoin('tails'))
-});
+app.get('/app/flip/call/:guess(heads|tails)/', (req, res) => {
+    const game = flipACoin(req.params.guess)
+    res.status(200).json(game)
+})    
 
 // Default response for any other request
 app.use(function(req, res){
