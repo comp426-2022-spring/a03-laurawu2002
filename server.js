@@ -23,7 +23,7 @@ app.get('/app/', (req, res) => {
         res.end(res.statusCode+ ' ' +res.statusMessage)
     });
 
-app.get('/app/flips/', (req, res) => {
+app.get('/app/flip/', (req, res) => {
     // Respond with status 200
     res.statusCode = 200;
     res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
