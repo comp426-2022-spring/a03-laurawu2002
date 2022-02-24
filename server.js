@@ -36,7 +36,7 @@ app.get('/app/flips/:number', (req, res) => {
     const flips = coinFlips(req.params.number)
     const count = countFlips(flips)
     res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-    res.end('{"raw":[' + flips + '],"summary":' + count + "}")
+    res.end('{"raw":' + flips + ',"summary":' + count + "}")
     });
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res) => {
